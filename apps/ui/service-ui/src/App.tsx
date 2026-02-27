@@ -1,9 +1,22 @@
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import EventDetail from "./EventDetail";
 
-function App() {
-  const [services, setServices] = useState([]);
-  const [selectedService, setSelectedService] = useState(null);
+interface Service {
+  id: number;
+  name: string;
+  description: string;
+  owner: string;
+  status: string;
+  environment: string;
+  createdAt: string;
+}
+
+function ServicesPage() {
+  const [services, setServices] = useState<Service[]>([]);
+  const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -21,7 +34,7 @@ function App() {
 
   return (
     <div style={containerStyle}>
-      <h1 style={{ color: "#222" }}>Services</h1>
+      <h1>Services</h1>
 
       <table style={tableStyle}>
         <thead>
@@ -55,8 +68,8 @@ function App() {
                 <button
                   style={buttonStyle}
                   onClick={(e) => {
-                    e.stopPropagation(); // prevent row selection
-                    alert(`Navigate to events of ${service.name}`);
+                    e.stopPropagation();
+                    navigate(`/services/${service.id}/events`);
                   }}
                 >
                   Go to Event Detail
@@ -66,63 +79,52 @@ function App() {
           ))}
         </tbody>
       </table>
-
-      {selectedService && (
-        <div style={detailBoxStyle}>
-          <h2 style={{ color: "#222" }}>Selected Service Details</h2>
-          <p><strong>Name:</strong> {selectedService.name}</p>
-          <p><strong>Description:</strong> {selectedService.description}</p>
-          <p><strong>Created At:</strong> {selectedService.createdAt}</p>
-        </div>
-      )}
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<ServicesPage />} />
+      <Route path="/services/:id/events" element={<EventDetail />} />
+    </Routes>
   );
 }
 
 /* ---------- Styles ---------- */
 
-const containerStyle = {
+const containerStyle: React.CSSProperties = {
   padding: "40px",
   backgroundColor: "#f5f7fa",
   minHeight: "100vh",
-  fontFamily: "Segoe UI, Arial, sans-serif",
-  color: "#333",
+  fontFamily: "Segoe UI, Arial",
 };
 
-const tableStyle = {
+const tableStyle: React.CSSProperties = {
   width: "100%",
   borderCollapse: "collapse",
   marginTop: "20px",
   backgroundColor: "white",
-  boxShadow: "0 4px 10px rgba(0,0,0,0.05)",
 };
 
-const thStyle = {
+const thStyle: React.CSSProperties = {
   padding: "12px",
   textAlign: "left",
 };
 
-const tdStyle = {
+const tdStyle: React.CSSProperties = {
   padding: "12px",
   borderBottom: "1px solid #eee",
-  color: "#333",
 };
 
-const buttonStyle = {
+const buttonStyle: React.CSSProperties = {
   padding: "6px 12px",
   backgroundColor: "#3498db",
   color: "white",
   border: "none",
   borderRadius: "6px",
   cursor: "pointer",
-};
-
-const detailBoxStyle = {
-  marginTop: "30px",
-  padding: "20px",
-  backgroundColor: "white",
-  borderRadius: "10px",
-  boxShadow: "0 4px 10px rgba(0,0,0,0.05)",
 };
 
 export default App;
