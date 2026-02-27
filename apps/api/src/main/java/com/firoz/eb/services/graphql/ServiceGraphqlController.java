@@ -8,19 +8,20 @@ import com.firoz.eb.services.domain.ServiceEnvironment;
 import com.firoz.eb.services.domain.ServiceStatus;
 import com.firoz.eb.services.persistence.EventRepository;
 import com.firoz.eb.services.persistence.ServiceRepository;
-import graphql.schema.DataFetchingEnvironment;
-import org.dataloader.DataLoader;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
+import java.util.logging.Logger;
 
+@Slf4j
 @Controller
 public class ServiceGraphqlController {
 
+    Logger logger;
     private final ServiceRepository serviceRepository;
     private final EventRepository eventRepository;
 
@@ -49,13 +50,24 @@ public class ServiceGraphqlController {
     }
 
 
+//    @SchemaMapping(typeName = "Service", field = "events")
+//    public CompletableFuture<List<EventEntity>> events(
+//            ServiceEntity service,
+//            @Argument EventType type,
+//            DataFetchingEnvironment env
+//    ) {
+//        DataLoader<EventsKey, List<EventEntity>> loader = env.getDataLoader("eventsByServiceAndType");
+//        return loader.load(new EventsKey(service.getId(), type));
+//    }
+
     @SchemaMapping(typeName = "Service", field = "events")
-    public CompletableFuture<List<EventEntity>> events(
-            ServiceEntity service,
-            @Argument EventType type,
-            DataFetchingEnvironment env
-    ) {
-        DataLoader<EventsKey, List<EventEntity>> loader = env.getDataLoader("eventsByServiceAndType");
-        return loader.load(new EventsKey(service.getId(), type));
+    public List<EventEntity> events(ServiceEntity service, @Argument EventType type) {
+        System.out.println("**** Type Changed  ***"+type);
+        Long serviceId = service.getId();
+        if (serviceId == null) return List.of();
+
+        return (type == null)
+                ? eventRepository.findByServiceId(serviceId)
+                : eventRepository.findByServiceIdAndType(serviceId, type);
     }
 }
