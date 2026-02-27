@@ -115,4 +115,9 @@ jdbc:h2:mem:eb
 13. Check ACL . Token does not mean we can see other services
 14. Logging and Monitoring (ECS Task Count in DataDog / Splunk For long and alert)
 
-TODO:: Postman -> NodeJS code walk through
+####
+Queries
+```declarative
+SELECT * FROM EVENTS;
+SELECT * FROM SERVICES;
+```
