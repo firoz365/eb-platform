@@ -1,5 +1,6 @@
 package com.firoz.eb.services.api.dto;
 import com.firoz.eb.services.domain.ServiceEntity;
+import com.firoz.eb.services.domain.ServiceEnvironment;
 import com.firoz.eb.services.domain.ServiceStatus;
 
 import java.time.Instant;
@@ -10,11 +11,12 @@ public class ServiceResponse {
     public String description;
     public String owner;
     public ServiceStatus status;
-    public Long version;
+    public Integer version;
     public String createdBy;
     public Instant createdAt;
     public String updatedBy;
     public Instant updatedAt;
+    public ServiceEnvironment environment;
 
     public static ServiceResponse from(ServiceEntity e) {
         ServiceResponse r = new ServiceResponse();
@@ -28,6 +30,7 @@ public class ServiceResponse {
         r.createdAt = e.getCreatedAt();
         r.updatedBy = e.getUpdatedBy();
         r.updatedAt = e.getUpdatedAt();
+        r.environment = e.getEnvironment();
         return r;
     }
 }

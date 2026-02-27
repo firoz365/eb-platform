@@ -1,0 +1,36 @@
+type Query {
+  services(
+    name: String
+    owner: String
+    environment: ServiceEnvironment
+    status: ServiceStatus
+  ): [Service!]!
+}
+
+type Service {
+  id: ID!
+  name: String!
+  description: String
+  owner: String!
+  environment: ServiceEnvironment!
+  status: ServiceStatus!
+  version: Int
+  createdBy: String
+  createdAt: String
+  updatedBy: String
+  updatedAt: String
+
+  # Nested filtering: fetch ERROR events for a given service
+  events(type: EventType): [Event!]!
+}
+
+type Event {
+  id: ID!
+  type: EventType!
+  message: String!
+  createdAt: String!
+}
+
+enum ServiceStatus { ACTIVE INACTIVE DELETED }
+enum ServiceEnvironment { DEV SIT UAT PROD }
+enum EventType { INFO WARN ERROR }

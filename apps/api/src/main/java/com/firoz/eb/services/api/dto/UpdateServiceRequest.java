@@ -1,5 +1,6 @@
 package com.firoz.eb.services.api.dto;
 
+import com.firoz.eb.services.domain.ServiceEnvironment;
 import com.firoz.eb.services.domain.ServiceStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -22,5 +23,9 @@ public class UpdateServiceRequest {
     public ServiceStatus status;
 
     @NotNull
-    public Long version;
+    public Integer version;
+
+    @NotNull
+    public ServiceEnvironment environment;
+
 }

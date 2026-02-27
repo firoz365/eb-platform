@@ -1,6 +1,7 @@
 package com.firoz.eb.shared.api;
 
 import com.firoz.eb.shared.exception.DuplicateServiceNameException;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -13,6 +14,12 @@ public class ApiExceptionHandler {
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErrorResponse handleDuplicate(DuplicateServiceNameException ex) {
         return new ErrorResponse("DUPLICATE_SERVICE_NAME", ex.getMessage());
+    }
+
+    @ExceptionHandler(OptimisticLockingFailureException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponse versionMismatch(OptimisticLockingFailureException ex) {
+        return new ErrorResponse("VERSION_MISMATCH", ex.getMessage());
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

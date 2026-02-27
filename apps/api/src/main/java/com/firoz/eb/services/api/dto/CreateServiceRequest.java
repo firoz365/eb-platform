@@ -1,5 +1,6 @@
 package com.firoz.eb.services.api.dto;
 
+import com.firoz.eb.services.domain.ServiceEnvironment;
 import com.firoz.eb.services.domain.ServiceStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -18,4 +19,6 @@ public class CreateServiceRequest {
     public String owner;
 
     public ServiceStatus status;
+
+    public ServiceEnvironment environment;
 }

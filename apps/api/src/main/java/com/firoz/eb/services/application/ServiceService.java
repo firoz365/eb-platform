@@ -2,6 +2,7 @@ package com.firoz.eb.services.application;
 
 import com.firoz.eb.services.application.command.UpdateServiceCommand;
 import com.firoz.eb.services.domain.ServiceEntity;
+import com.firoz.eb.services.domain.ServiceEnvironment;
 import com.firoz.eb.services.domain.ServiceStatus;
 import com.firoz.eb.services.persistence.ServiceRepository;
 import com.firoz.eb.shared.exception.DuplicateServiceNameException;
@@ -21,7 +22,7 @@ public class ServiceService {
     }
 
     @Transactional
-    public ServiceEntity create(String name, String description, String owner, ServiceStatus status) {
+    public ServiceEntity create(String name, String description, String owner, ServiceStatus status , ServiceEnvironment environment) {
         if (repository.existsByNameIgnoreCase(name)) {
             throw new DuplicateServiceNameException(name);
         }
@@ -30,6 +31,7 @@ public class ServiceService {
         s.setDescription(description);
         s.setOwner(owner);
         s.setStatus(status == null ? ServiceStatus.ACTIVE : status);
+        s.setEnvironment(environment == null ? ServiceEnvironment.DEV : environment);
         return repository.save(s);
     }
 
@@ -64,6 +66,7 @@ public class ServiceService {
         existing.setDescription(cmd.description());
         existing.setOwner(cmd.owner());
         existing.setStatus(cmd.status());
+        existing.setEnvironment(cmd.environment());
 
         return repository.save(existing);
     }

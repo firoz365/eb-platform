@@ -25,7 +25,7 @@ public class ServiceController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ServiceResponse create(@Valid @RequestBody CreateServiceRequest req) {
-        ServiceEntity created = service.create(req.name, req.description, req.owner, req.status);
+        ServiceEntity created = service.create(req.name, req.description, req.owner, req.status , req.environment);
         return ServiceResponse.from(created);
     }
 
@@ -48,6 +48,8 @@ public class ServiceController {
                 .owner(req.owner)
                 .status(req.status)
                 .version(req.version)
+                .version(req.version)
+                .environment(req.environment)
                 .build();
         return ServiceResponse.from(service.update(cmd));
     }

@@ -11,6 +11,81 @@ Start the app first:
 http://localhost:8080
 ```
 
+### GraphQL 
+```
+http://localhost:8080/graphql
+```
+### GraphQL
+
+Endpoint:
+
+```
+http://localhost:8080/graphql
+```
+
+#### List All Services
+```declarative
+{
+  "query": "query { services { id name description owner environment status version createdAt updatedAt } }"
+}
+```
+
+#### Find By Service Name
+```declarative
+{
+  "query": "query { services(name: \"Payment-Service\") { id name description owner environment status version } }"
+}
+```
+
+#### Find By Owner
+```declarative
+{
+  "query": "query { services(owner: \"team-payments\") { id name owner environment status } }"
+}
+```
+
+#### Find By Environment
+```declarative
+{
+  "query": "query { services(environment: DEV) { id name environment status } }"
+}
+```
+
+#### Find By Status
+```declarative
+{
+  "query": "query { services(status: ACTIVE) { id name status owner environment } }"
+}
+```
+
+#### Fetch Service With All Events
+```declarative
+{
+  "query": "query { services(name: \"Payment-Service\") { id name status events { id type message createdAt } } }"
+}
+```
+
+#### Fetch Only ERROR Events for a Service
+```declarative
+{
+  "query": "query { services(name: \"Payment-Service\") { id name status events(type: ERROR) { id type message createdAt } } }"
+}
+```
+
+#### Fetch ERROR Events for ACTIVE Service
+```declarative
+{
+  "query": "query { services(name: \"Payment-Service\", status: ACTIVE) { id name status events(type: ERROR) { id message createdAt } } }"
+}
+```
+
+#### Fetch WARN Events in SIT Environment
+```declarative
+{
+  "query": "query { services(environment: SIT, status: ACTIVE) { id name environment status events(type: WARN) { id type message createdAt } } }"
+}
+```
+
 
 #### H2 Console
 ```
@@ -36,3 +111,4 @@ jdbc:h2:mem:eb
 9. Use a base abstract superclass for common auditing fields
 10. Create indexes on frequently queried/searchable fields
 11. Pagination and sorting
+12. Tests
