@@ -114,5 +114,14 @@ jdbc:h2:mem:eb
 12. Tests
 13. Check ACL . Token does not mean we can see other services
 14. Logging and Monitoring (ECS Task Count in DataDog / Splunk For long and alert)
-
+15. Add tests
 TODO:: Postman -> NodeJS code walk through
+
+TODO : 
+Add : Prettier , Lint , Husky (Pre hook)
+Test : Jest , TestingLibrary , Cypress
+
+
+Add coverage threshold
+
+
