@@ -35,3 +35,4 @@ jdbc:h2:mem:eb
 8. Implement structured logging with MDC (correlation ID)
 9. Use a base abstract superclass for common auditing fields
 10. Create indexes on frequently queried/searchable fields
+11. Pagination and sorting
