@@ -49,20 +49,8 @@ public class ServiceGraphqlController {
                 .toList();
     }
 
-
-//    @SchemaMapping(typeName = "Service", field = "events")
-//    public CompletableFuture<List<EventEntity>> events(
-//            ServiceEntity service,
-//            @Argument EventType type,
-//            DataFetchingEnvironment env
-//    ) {
-//        DataLoader<EventsKey, List<EventEntity>> loader = env.getDataLoader("eventsByServiceAndType");
-//        return loader.load(new EventsKey(service.getId(), type));
-//    }
-
     @SchemaMapping(typeName = "Service", field = "events")
     public List<EventEntity> events(ServiceEntity service, @Argument EventType type) {
-        System.out.println("**** Type Changed  ***"+type);
         Long serviceId = service.getId();
         if (serviceId == null) return List.of();
 

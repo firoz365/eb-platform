@@ -1,11 +1,18 @@
 app:
   security:
+    enabled: false
     jwt:
       hmac-secret: ${JWT_HMAC_SECRET:random-secret-at-least-32-chars-1234567890123456711}
       issuer: ebrd-local
       audience: ebrd-api
 
+
 spring:
+  application:
+    name: eb-platform
+  graphql:
+    dataloader:
+      enabled: true
   datasource:
     url: jdbc:h2:mem:eb;DB_CLOSE_DELAY=-1
     driverClassName: org.h2.Driver

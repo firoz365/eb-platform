@@ -113,3 +113,4 @@ jdbc:h2:mem:eb
 11. Pagination and sorting
 12. Tests
 13. Check ACL . Token does not mean we can see other services
+14. Logging and Monitoring (ECS Task Count in DataDog / Splunk For long and alert)

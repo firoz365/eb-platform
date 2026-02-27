@@ -25,7 +25,6 @@ public class EventGenerator {
 
     @Scheduled(fixedRate = 30_000)
     public void generate() {
-        System.out.println("========== generate data fatest ===");
         List<ServiceEntity> services = serviceRepository.findAll();
         if (services.isEmpty()) return;
 
