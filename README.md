@@ -112,3 +112,4 @@ jdbc:h2:mem:eb
 10. Create indexes on frequently queried/searchable fields
 11. Pagination and sorting
 12. Tests
+13. Check ACL . Token does not mean we can see other services

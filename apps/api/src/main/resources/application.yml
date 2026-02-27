@@ -1,3 +1,10 @@
+app:
+  security:
+    jwt:
+      hmac-secret: ${JWT_HMAC_SECRET:random-secret-at-least-32-chars-1234567890123456711}
+      issuer: ebrd-local
+      audience: ebrd-api
+
 spring:
   datasource:
     url: jdbc:h2:mem:eb;DB_CLOSE_DELAY=-1

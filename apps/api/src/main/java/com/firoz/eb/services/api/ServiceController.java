@@ -8,7 +8,17 @@ import com.firoz.eb.services.application.command.UpdateServiceCommand;
 import com.firoz.eb.services.domain.ServiceEntity;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -22,6 +32,7 @@ public class ServiceController {
         this.service = service;
     }
 
+    @PreAuthorize("hasAuthority('SCOPE_services:write')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ServiceResponse create(@Valid @RequestBody CreateServiceRequest req) {
@@ -29,11 +40,13 @@ public class ServiceController {
         return ServiceResponse.from(created);
     }
 
+    @PreAuthorize("hasAuthority('SCOPE_services:read')")
     @GetMapping("/{id}")
     public ServiceResponse get(@PathVariable Long id) {
         return ServiceResponse.from(service.get(id));
     }
 
+    @PreAuthorize("hasAuthority('SCOPE_services:read')")
     @GetMapping
     public List<ServiceResponse> list() {
         return service.list().stream().map(ServiceResponse::from).toList();
