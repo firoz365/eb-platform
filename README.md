@@ -20,7 +20,7 @@ JDBC URL:
 ```
 jdbc:h2:mem:eb
 ```
-![img.png](img.png)![img.png](img.png)
+![img.png](img.png)
 
 
 ### Things to Be Addressed / Improvements
